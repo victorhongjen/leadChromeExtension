@@ -1,8 +1,9 @@
 let myLeads = []
 const buttonEl = document.getElementById("btn-el");
 const inputEl = document.getElementById("input-el");
+const saveTab = document.getElementById("save-tab-btn");
 const unorderedListEl = document.getElementById("ul-el");
-const deleteBtnEl = document.getElementById("delete-el")
+const deleteBtnEl = document.getElementById("delete-el");
 
 const myLeadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads")) //string to array
 
@@ -25,6 +26,16 @@ for (i = 0; i < leads.length; i++) {
 }   //target='_blank' to open link in a new tab
 unorderedListEl.innerHTML = listItem //dom minupulation outside for loop is better
 }
+
+saveTab.addEventListener("click", () => {
+    // console.log(tabs[0].url)
+    //grab url from current tab
+    chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
+        myLeads.push(tabs[0].url)
+        localStorage.setItem("myLeads", JSON.stringify(myLeads))
+        render(myLeads)
+    });
+})
 
 buttonEl.addEventListener("click", () => { // this way is cleaner on HTML file
     console.log("clicked")
