@@ -3,15 +3,36 @@
 // }
 
 let myLeads = []
+
+// localStorage.setItem("herLead","Amazon.com")  
+// console.log(localStorage.getItem("herLead"))
+// localStorage.clear
+
+// myLeads = JSON.parse(myLeads)
+
+// myLeads.push("www.newwebsite.com")
+
+// myLeads = JSON.stringify(myLeads)
+
+// console.log(typeof myLeads)
+
 const buttonEl = document.getElementById("btn-el");
 const inputEl = document.getElementById("input-el");
 const unorderedListEl = document.getElementById("ul-el");
 
+const myLeadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"))
+// console.log(myLeadsFromLocalStorage)
+if (myLeadsFromLocalStorage) {
+    myLeads = myLeadsFromLocalStorage   
+    renderLeads()
+};
 
 buttonEl.addEventListener("click", () => { // this way is cleaner on HTML file
     myLeads.push(inputEl.value) 
     inputEl.value = ""
+    localStorage.setItem("myLeads", JSON.stringify(myLeads)) 
     renderLeads()
+    console.log(localStorage.getItem("myLeads"))
 })
 
 function renderLeads() {
